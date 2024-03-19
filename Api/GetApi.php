@@ -62,7 +62,7 @@ function GetCategoryImage(){
     }
 }
 
-function GetProductRandom(){
+function GetProductRandom($quantity){
     $url = "http://127.0.0.1:8000/api/ProductRandom";
     $curl =curl_init($url);
 
@@ -75,7 +75,7 @@ function GetProductRandom(){
         if($data){
             $count = 0;
             foreach($data['data'] as $Product){
-                if($count >= 12){
+                if($count >= $quantity){
                     break;
                 }
                 ?>
@@ -91,7 +91,7 @@ function GetProductRandom(){
                                 </div>
                                  <div class="featured__item__text">
                                     <h6><a href="#"><?php echo $Product["Name"] ?></a></h6>
-                                    <h5><?php echo $Product["Price"] ?></h5>
+                                    <h5><?php echo number_format($Product["Price"],0,",",".",)?>đ</h5>
                                 </div>
                             </div>
                     </div>
@@ -175,7 +175,7 @@ $count++;
             }
         }
         else{
-            echo "Khong co san pham";
+            echo "Lỗi: Không thể phân tích phản hồi JSON từ API.";
         }
     }
     else{
@@ -217,7 +217,7 @@ $count++;
             }
         }
         else{
-            echo "Khong co san pham";
+            echo "Lỗi: Không thể phân tích phản hồi JSON từ API.";
         }
     }
     else{
@@ -227,6 +227,144 @@ $count++;
 
  }
 
+function NewProductCategory($categoryID,$count){
+    $url = "http://127.0.0.1:8000/api/NewProductCategory/$categoryID";
+    $curl =curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, $url);
+
+    $response = curl_exec($curl);
+    $quantity = 0;
+    if($response){
+        $data = json_decode($response, true);
+        if($data){
+            foreach($data["data"] as $Product){
+                if($quantity>=$count){
+                    break;
+                }
+                ?>
+                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="<?php echo $Product["Image"] ?>" >
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><?php echo $Product["Name"] ?>/h6>
+                                        <span><?php echo number_format($Product["Price"],0,",",".",)?>đ</span>
+                                    </div>
+                                </a>
+                <?php
+                $quantity++;
+            }
+        }
+        else {
+            echo "Lỗi: Không thể phân tích phản hồi JSON từ API.";
+        }
+    }
+    else{
+        echo "Lỗi không kết nói được với API";
+    }
+} 
+function MaxPrice(){
+    $url = "http://127.0.0.1:8000/api/MaxPrice";
+    $curl =curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, $url);
+
+    $response = curl_exec($curl);
+
+    if($response){
+        $data = json_decode($response, true);
+        if($data){
+           echo $data["data"];
+        }
+    }
+}
+function MinPrice(){
+    $url = "http://127.0.0.1:8000/api/MinPrice";
+    $curl =curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, $url);
+
+    $response = curl_exec($curl);
+
+    if($response){
+        $data = json_decode($response, true);
+        if($data){
+            echo number_format($data["data"],0,",",".",);
+        }
+    }
+}
+
+function NewProduct() {
+
+    $url = "http://127.0.0.1:8000/api/NewProduct";
+    $curl =curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, $url);
+
+    $response = curl_exec($curl);
+    if($response){
+        $data = json_decode($response, true);
+        if($data){
+
+            foreach($data["data"] as $Product){
+                ?>
+            <a href="#" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="<?php echo $Product["Image"] ?>" alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6><?php echo $Product["Name"] ?></h6>
+                                                <span><?php echo number_format($Product["Price"],0,",",".",); ?></span>
+                                            </div>
+                                        </a>
+                <?php
+            }
+        }
+    }
+
+}
+
+function SaleProduct(){
+    $url = "http://127.0.0.1:8000/api/Product";
+    $curl =curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, $url);
+
+    $response = curl_exec($curl);
+
+    if($response){
+        $data = json_decode($response, true);
+        if($data){
+            foreach($data["data"] as $Product){
+                if($Product["Sale"]==null){
+                    continue;
+                }
+                ?>
+                                <div class="col-lg-4">
+                                    <div class="product__discount__item">
+                                        <div class="product__discount__item__pic set-bg">
+                                            <img src="<?php echo $Product["Image"] ?>" alt="">
+                                            <div class="product__discount__percent"><?php echo $Product["Sale"] ?></div>
+                                            <ul class="product__item__pic__hover">
+                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product__discount__item__text">
+                                            <!-- <span>Dried Fruit</span> -->
+                                            <h5><a href="#"><?php $Product["Name"] ?></a></h5>
+                                            <div class="product__item__price"><?php echo number_format($Product["Price"],0,",",".",); ?>đ<span>10.000đ</span></div>
+                                        </div>
+                                    </div>
+            </div>
+                <?php
+                
+            }
+        }
+    }
+}
 
 
 ?>

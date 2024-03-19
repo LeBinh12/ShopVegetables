@@ -20,7 +20,7 @@
                  
 
                 <?php
-                    GetProductRandom();
+                    GetProductRandom(12);
                     ?>
 
                 
