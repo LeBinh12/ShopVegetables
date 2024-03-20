@@ -16,7 +16,7 @@ function GetCategory(){
             //Duyet cac danh sach co trong mang Category
             foreach($data["data"] as $category){
                 ?>
-                <li><a href="#"><?php echo $category["Name"] ?></a></li>
+                <li><a href="index.php?Page=Views/Pages/ProductCategory.php&id=<?php echo $category["id"] ?>"><?php echo $category["Name"] ?></a></li>
                 <?php
 
             }
