@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <script src="js/main.js"></script>
+    <!-- Google Font -->
+   
 </head>
 
 <body>
@@ -38,7 +40,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="../Shop/index.php"><img src="img/logo.png" alt=""></a>
+            <a href="index.php"><img src="img/logo.png" alt=""></a>
         </div>
         <!-- <div class="humberger__menu__cart">
             <ul>
@@ -63,11 +65,11 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.php">Home</a></li>
-                <li><a href="../Shop/shop-grid.php">Shop</a></li>
+                <li class="active"><a href="index.php">Home</a></li>
+                <li><a href="index.php?Page=shop-grid.php">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
+                        <li><a href="./shop-details.php">Shop Details</a></li>
                         <li><a href="./shoping-cart.html">Shoping Cart</a></li>
                         <li><a href="./checkout.html">Check Out</a></li>
                         <li><a href="./blog-details.html">Blog Details</a></li>
@@ -172,9 +174,14 @@
         </div>
     </header>
     <!-- Header Section End -->
-
+    
     <!-- Hero Section Begin -->
    <?php
+   require "../Shop/Views/Home/Header.php";
+   if(isset($_GET['Page'])){
+    require $_GET["Page"];
+   }
+   else{
     require "../Shop/Views/Home/Category.php";
    ?>
     <!-- Hero Section End -->
@@ -198,6 +205,7 @@
     <!-- Latest Product Section Begin -->
     <?php
     require "../Shop/Views/Home/NewProduct.php";
+   }
    ?>
     <!-- Latest Product Section End -->
 
