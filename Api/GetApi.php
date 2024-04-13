@@ -246,7 +246,7 @@ if($response){
         foreach($data["data"] as $Product){
            
             ?>
-
+<form action="index.php?Page=Views/Pages/ShopCart.php&$_Cookie['uid']" method="post">
 <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
@@ -273,11 +273,17 @@ if($response){
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <input type="text" value="1">
+                                    <input type="text" value="1" name="quantity">
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <input type="hidden" name="id" value="<?php echo $Product["id"] ?>">
+                        <input type="hidden" name="image" value="<?php echo $Product["Image"] ?>">
+                        <input type="hidden" name="name" value="<?php echo $Product["Name"] ?>">
+                        <input type="hidden" name="price" value="<?php echo $Product["Price"] ?>">
+
+
+                        <a href="#" class="primary-btn">  <button type="submit" name="AddCart" style="background:#7fad39; "> ADD TO CARD</button></a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
@@ -313,6 +319,7 @@ if($response){
                     </div>
                 </div>
             </div>
+</form>
             <?php
             $CategoryId = $Product["Category_id"];
         }
@@ -566,6 +573,67 @@ function SaleProduct(){
         }
     }
 }
+
+
+
+  
+function Cart($uid){
+    $url = "http://127.0.0.1:8000/api/Cart/$uid";
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response) {
+        $data = json_decode($response, true);
+        if ($data) {
+            
+            foreach ($data["data"] as $product) {
+               
+    ?>
+    <form action="index.php?Page=Views/Pages/ShopCart.php" method="post">
+                        <td class="shoping__cart__item">
+                            <img src="<?php echo $product["Image"] ?>" width="100px">
+                            <h5><?php echo $product["Name"] ?></h5>
+                        </td>
+                        <td class="shoping__cart__price">
+                            <?php echo number_format($product["Price"], 0, ",", "."); ?>đ
+                        </td>
+                        <td class="shoping__cart__quantity">
+                            <div class="quantity">
+                                <input type="hidden" value="<?php echo $product["Cart_id"] ?>" name="id_Cart">
+                              
+                                <input type="hidden" value="<?php echo $product["uid"] ?>" name="uidCart">
+
+                                <button  name="Up" type="submit"><a href=""><i class="fa-solid fa-plus"></i></a></button>
+                                <h5><?php echo $product["quantity"] ?></h5> 
+                                <button  name="Down" type="submit"><a href=""></a><i class="fa-solid fa-minus"></i></a></button>
+                                
+                            </div>
+                        </td>
+                        <td class="shoping__cart__total">
+                            <?php echo number_format($product["Price"] * $product["quantity"], 0, ",", "."); ?>đ
+                        </td>
+                        <td class="shoping__cart__item__close">  
+                            <button name="Delete_Cart" type="submit" value="<?php echo $product["Cart_id"]; ?>"><i class="icon_close"></i></button>                       
+                        </td>
+                    </tr>
+                </form>
+    <?php
+
+            }
+            
+        } else {
+            echo "Lỗi: Không thể phân tích phản hồi JSON từ API.";
+        }
+    } else {
+        echo "Lỗi không kết nối được với API";
+    }
+}
+
+
+
 
 
 ?>

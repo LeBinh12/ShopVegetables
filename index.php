@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://kit.fontawesome.com/5fa66840aa.js"></script>
+
     <script src="js/main.js"></script>
     <!-- Google Font -->
    
@@ -29,7 +31,17 @@
 <body>
 
 <?php 
+    require "../Shop/Api/PostApi.php";
     require "../Shop/Api/GetApi.php";
+
+      //tạo biến uid bằng cách sử dụng biến cookies của php
+      $uid=$_COOKIE['uid'];
+      //nếu ui bằng null thì cho biến uid random
+      if($_COOKIE['uid'] == null){
+          $uid=rand(0,10000000); 
+      }
+      // tạo cookies với php
+      setcookie('uid',$uid, time() + (86400 * 30), "/");
 ?>
     <!-- Page Preloder -->
     <!-- <div id="preloder">
