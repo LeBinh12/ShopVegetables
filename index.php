@@ -173,8 +173,12 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="index.php?Page=Views/Pages/ShopCart.php&$_Cookie['uid']"><i class="fas fa-shopping-cart"></i> <span><?php     
+                             CountProduct($uid)//số lượng sản phẩm trong giỏ hàng 
+                            ?></span></a></li>
+                            <li><a href="#"><i class="fa fa-truck"></i> <span>
+                           
+                            </span></a></li>
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
@@ -189,6 +193,7 @@
     
     <!-- Hero Section Begin -->
    <?php
+   CountProduct($uid);
    require "../Shop/Views/Home/Header.php";
    if(isset($_GET['Page'])){
     require $_GET["Page"];

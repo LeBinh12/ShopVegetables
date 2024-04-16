@@ -42,12 +42,40 @@
                                 <div class="latest-product__slider owl-carousel">
                                     <div class="latest-prdouct__slider__item">
                                         <?php
-                                            NewProduct();
+                                            $data =  NewProduct();
+                                            foreach ($data as $Product){
+                                                ?>
+                                                <a href="#" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="<?php echo $Product["Image"] ?>" alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6><a href="index.php?Page=Views/Pages/shop-details.php&idct=<?php echo $Product["id"] ?>"><?php echo $Product["Name"] ?></a></h6>
+                                                <span><?php echo number_format($Product["Price"],0,",",".",); ?></span>
+                                            </div>
+                                        </a>
+                                        <?php
+                                            }
+                                        ?>
                                         ?>
                                     </div>
                                     <div class="latest-prdouct__slider__item">
                                     <?php
-                                            NewProduct();
+                                            $data =  NewProduct();
+                                            foreach ($data as $Product){
+                                                ?>
+                                                <a href="#" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="<?php echo $Product["Image"] ?>" alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6><a href="index.php?Page=Views/Pages/shop-details.php&idct=<?php echo $Product["id"] ?>"><?php echo $Product["Name"] ?></a></h6>
+                                                <span><?php echo number_format($Product["Price"],0,",",".",); ?></span>
+                                            </div>
+                                        </a>
+                                        <?php
+                                            }
+                                        ?>
                                         ?>
                                     </div>
                                 </div>
@@ -84,7 +112,27 @@
                         <?php
                         if(isset($_POST['Search'])){
                             $Name = $_POST['Search'];
-                            SearchProduct($Name);
+                            $data = SearchProduct($Name);
+                            foreach($data as $Product) {
+                            ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mix category<?php echo $Product['Category_id'] ?> fresh-meat"> 
+                            <div class="featured__item">
+                                    <div class="featured__item__pic set-bg">
+                                    <img src="<?php echo $Product["Image"] ?> " alt="">
+                                        <ul class="featured__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                     <div class="featured__item__text">
+                                        <h6><a href="index.php?Page=Views/Pages/shop-details.php&idct=<?php echo $Product["id"] ?>"><?php echo $Product["Name"] ?></a></h6>
+                                        <h5><?php echo number_format($Product["Price"],0,",",".",)?>đ</h5>
+                                    </div>
+                                </div>
+                        </div>
+                            <?php
+                            }
                         }
                             
                         ?>

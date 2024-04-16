@@ -5,7 +5,16 @@
                     </div>
             <div class="row">
                 <?php 
-                    GetBannerRandom();
+                    $data = GetBannerRandom();
+                    foreach ($data as $Banner){
+                        ?>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="banner__pic">
+                            <img src="<?php echo $Banner["Image"] ?>" alt="">
+                        </div>
+                    </div>
+                <?php
+                    }
                 ?>
             </div>
         </div>

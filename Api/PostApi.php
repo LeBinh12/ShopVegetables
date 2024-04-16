@@ -80,12 +80,14 @@
     }
 
     function DeleteCart($id,$uid){
-      
+        
         $url = "http://127.0.0.1:8000/api/DeleteCart";
         $ch = curl_init();
+       
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      
         $data = [
             "Cart_id"=>$id,
             "uid"=> $uid
@@ -93,8 +95,8 @@
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
          $response = curl_exec($ch);
-        echo $id;
         if($response === false){
+            echo $id;
             echo "CURL Error: " . curl_error($ch);
             
         }else {
