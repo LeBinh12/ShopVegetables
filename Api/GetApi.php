@@ -462,6 +462,55 @@ function Cart($uid){
         return 0; // Trả về 0 nếu không có dữ liệu hoặc có lỗi
     }
 
+   
+      
+
+    
+    function GetCustomer()
+    {
+        $url = "http://127.0.0.1:8000/api/AddOrder";
+        $ch = curl_init($url);    
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch); 
+            $arr = array();      
+            if ($response) {
+                $data = json_decode($response, true);
+                if($data) {
+                    foreach ($data["data"] as $product) { 
+                        $arr[] = $product;
+                    }
+                    return $arr;               
+                } else {
+                    echo "Lỗi: Không thể phân tích phản hồi JSON từ API.";
+                }
+            } else {
+                echo "Lỗi không kết nối được với API";
+            } 
+    }
+
+    function CountOrder($uid)
+    {
+        $url = "http://127.0.0.1:8000/api/OrderDetail/{$uid}";
+        $curl = curl_init($url);    
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        
+        $response = curl_exec($curl);
+    
+        if ($response) {
+            $data = json_decode($response, true);
+    
+            if ($data && isset($data["data"])) {
+                $productCount = count($data["data"]);
+                echo $productCount;
+            }
+        }
+    
+        return 0;
+    }
+
+   
+     
+    
 
 
 

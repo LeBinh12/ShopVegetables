@@ -96,7 +96,6 @@
 
          $response = curl_exec($ch);
         if($response === false){
-            echo $id;
             echo "CURL Error: " . curl_error($ch);
             
         }else {
@@ -105,4 +104,67 @@
             
         }
     }
+
+    function AddOrder($iddonhang,$Name, $Email, $Phone, $Address, $uid , $Nation, $CityOrTown,$Total,$OrderNote){
+        $url = "http://127.0.0.1:8000/api/AddOrder";
+        $ch = curl_init();
+       
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $data = [
+            "iddonhang" => $iddonhang,
+            "FullName" => $Name,
+            "Phone" => $Phone,
+            "Address" => $Address,
+            "Email" => $Email,
+            "uid" => $uid,
+            "National" => $Nation,
+            "TownOrCity" => $CityOrTown,
+            "Total" => $Total,
+            "OrderNote"=> $OrderNote,
+        ];
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        $response = curl_exec($ch);
+       if($response === false){
+          
+           echo "CURL Error: " . curl_error($ch);
+           
+       }else {
+           return $response;
+           
+       }
+    }
+
+    function AddOrderDetails($Quantity, $Price,$Product_id,$uid,$iddonhang){
+        $url = "http://127.0.0.1:8000/api/AddOrderDetails";
+        $ch = curl_init();
+       
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $data = [
+           'Quantity' => $Quantity,
+           'Price' => $Price,
+           'Product_id' => $Product_id,
+           'uid' => $uid,
+           'iddonhang' => $iddonhang,
+        ];
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        $response = curl_exec($ch);
+       if($response === false){
+          
+           echo "CURL Error: " . curl_error($ch);
+           
+       }else {
+           return $response;
+           
+       }
+    }
+
+    
 ?>
